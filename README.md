@@ -126,6 +126,7 @@ Adapters that have not been confirmed against a live instance yet carry a *beta*
 
 - [Running nexdeck: backups, restoring, updating](docs/operating.md)
 - [Integrations and widgets](docs/adapters.md)
+- [Extensions: your own integrations as YAML files](docs/extensions.md)
 - [Docker labels](docs/labels.md)
 - [Boards as files and provisioning](docs/provisioning.md)
 - [Kiosk displays](docs/kiosk.md)
@@ -153,6 +154,10 @@ The frontend on `http://localhost:5176` proxies `/api` to the backend. Tests: `p
 ### Adding an adapter
 
 One file in `backend/app/adapters/`: declare the connection fields and the widgets, implement `test`, `fetch`, optionally `action`, and `demo`. Every widget maps onto one of fifteen renderers, so no frontend code is needed. See [docs/adapters.md](docs/adapters.md).
+
+### Adding a service without code: extensions
+
+A YAML file that describes a service's API (connection fields, how to sign in, which address each card asks and where its numbers are) becomes an integration once imported under **System > Extensions**. Nothing in it is executed, and it survives updates in `/data/extensions/`. See [docs/extensions.md](docs/extensions.md) and the examples in [`extensions/`](extensions).
 
 ## License
 

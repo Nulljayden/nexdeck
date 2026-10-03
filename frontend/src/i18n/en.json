@@ -159,7 +159,8 @@
       "backups": "Backups",
       "media": "Media",
       "player": "Music player",
-      "homeNetwork": "Home network"
+      "homeNetwork": "Home network",
+      "extensions": "Extensions"
     },
     "mail": {
       "title": "Mail server",
@@ -532,6 +533,28 @@
         "factor_required": "Every account owes a second factor on this installation.",
         "home": "At home."
       }
+    },
+    "extensions": {
+      "title": "Extensions",
+      "help": "Integrations for more services, each one a YAML file that describes the service's API. An imported extension is offered under Integrations like any other service.",
+      "import": "Import file",
+      "paste": "Paste",
+      "importPasted": "Import",
+      "reload": "Reload folder",
+      "reloaded": "The extension folder was read again.",
+      "imported": "{{name}} {{version}} imported.",
+      "none": "No extensions imported yet.",
+      "by": "by {{author}}",
+      "connections_one": "{{count}} connection",
+      "connections_other": "{{count}} connections",
+      "connect": "Connect it",
+      "view": "Show the file",
+      "broken": "Files that could not be read",
+      "folder": "Files live in {{folder}}; a file copied there by hand appears after Reload folder.",
+      "remove": "Remove {{name}}?",
+      "removeBody": "The file is deleted. Importing it again brings it back.",
+      "removeInUse_one": "{{count}} connection uses it. It stays, but its cards show an error until the extension is imported again.",
+      "removeInUse_other": "{{count}} connections use it. They stay, but their cards show an error until the extension is imported again."
     }
   },
   "menu": {

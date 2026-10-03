@@ -1,0 +1,59 @@
+# Whisparr, of the *arr family; the same v3 API as Radarr and Sonarr.
+id: whisparr
+name: Whisparr
+version: 1.0.0
+description: Whisparr's download queue and its health warnings.
+author: nexdeck
+icon: whisparr
+category: downloads
+docs_url: https://wiki.servarr.com/whisparr
+url_placeholder: http://whisparr:6969
+guide:
+  - "The API key is under Settings > General > Security."
+
+fields:
+  - name: api_key
+    label: API key
+    type: password
+    required: true
+
+auth:
+  headers:
+    X-Api-Key: "{{ api_key }}"
+
+test:
+  path: /api/v3/system/status
+  success: "Whisparr {{ version }} answers."
+
+widgets:
+  - id: queue
+    name: Queue
+    description: What is downloading, with the time left.
+    renderer: list
+    path: /api/v3/queue
+    params: { pageSize: 20 }
+    refresh: 30
+    items: records
+    title: "{{ title }}"
+    subtitle: "{{ status }} · {{ size | bytes }}"
+    value: "{{ timeleft }}"
+    status: "{{ trackedDownloadStatus | map(ok=ok, warning=warn, error=bad) }}"
+    demo:
+      records:
+        - { title: Example.Release.One, status: downloading, size: 1610612736, timeleft: "00:12:00", trackedDownloadStatus: ok }
+        - { title: Example.Release.Two, status: queued, size: 734003200, timeleft: "", trackedDownloadStatus: warning }
+
+  - id: health
+    name: Health
+    description: How many warnings and errors Whisparr reports, with the first one.
+    renderer: value
+    path: /api/v3/health
+    refresh: 300
+    label: Health issues
+    value: "{{ $ | count }}"
+    warn_above: 0
+    rows:
+      - { label: Errors, value: "{{ $ | where(type, error) | count }}" }
+      - { label: First, value: "{{ [0].message }}" }
+    demo:
+      - { type: warning, message: Indexers unavailable due to failures for more than 6 hours }

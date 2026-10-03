@@ -30,6 +30,7 @@ from .routers import (
     boards,
     channels,
     discovery,
+    extensions,
     home_network,
     icons,
     imports,
@@ -55,6 +56,7 @@ from .routers import journal as journal_router
 from .security import prune_sessions
 from .services import backup, history, journal, provisioning, retention
 from .services import channels as channel_service
+from .services import extensions as extension_service
 from .services import icons as icon_service
 from .services import oidc as oidc_service
 from .services.channels import webpush as webpush_service
@@ -151,6 +153,7 @@ async def lifespan(app: FastAPI):
         system.load_demo_flag(db)
         journal.apply_stored(db)
     provisioning.load_all()
+    extension_service.reload()
     await collector.start()
     await health_service.start()
     await hass_listener.start()
@@ -208,7 +211,7 @@ if _cors:
 # past the point where compressing costs more than it saves for a small answer.
 app.add_middleware(GZipMiddleware, minimum_size=700)
 
-for module in (system, setup, auth, users, avatars, backups, boards, widgets, music, integrations, stream, notices, channels, push, tokens, icons, assets, discovery, logs, journal_router, mail, oidc, plex, search, appearance, templates, imports, nexcrate, home_network):
+for module in (system, setup, auth, users, avatars, backups, boards, widgets, music, integrations, stream, notices, channels, push, tokens, icons, assets, discovery, logs, journal_router, mail, oidc, plex, search, appearance, templates, imports, nexcrate, home_network, extensions):
     app.include_router(module.router)
 
 

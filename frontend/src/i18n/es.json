@@ -159,7 +159,8 @@
       "backups": "Copias de seguridad",
       "media": "Multimedia",
       "player": "Reproductor de música",
-      "homeNetwork": "Red doméstica"
+      "homeNetwork": "Red doméstica",
+      "extensions": "Extensiones"
     },
     "mail": {
       "title": "Servidor de correo",
@@ -532,6 +533,28 @@
         "factor_required": "En esta instalación todas las cuentas deben tener un segundo factor.",
         "home": "En casa."
       }
+    },
+    "extensions": {
+      "title": "Extensiones",
+      "help": "Integraciones para más servicios, cada una un archivo YAML que describe la API del servicio. Una extensión importada aparece en Integraciones como cualquier otro servicio.",
+      "import": "Importar archivo",
+      "paste": "Pegar",
+      "importPasted": "Importar",
+      "reload": "Releer la carpeta",
+      "reloaded": "Se ha vuelto a leer la carpeta de extensiones.",
+      "imported": "{{name}} {{version}} importada.",
+      "none": "Aún no hay extensiones importadas.",
+      "by": "de {{author}}",
+      "connections_one": "{{count}} conexión",
+      "connections_other": "{{count}} conexiones",
+      "connect": "Conectar",
+      "view": "Ver el archivo",
+      "broken": "Archivos que no se pudieron leer",
+      "folder": "Los archivos están en {{folder}}; uno copiado allí a mano aparece tras Releer la carpeta.",
+      "remove": "¿Quitar {{name}}?",
+      "removeBody": "El archivo se borra. Importarlo de nuevo lo recupera.",
+      "removeInUse_one": "{{count}} conexión la usa. Se queda, pero sus tarjetas muestran un error hasta que la extensión se importe de nuevo.",
+      "removeInUse_other": "{{count}} conexiones la usan. Se quedan, pero sus tarjetas muestran un error hasta que la extensión se importe de nuevo."
     }
   },
   "menu": {

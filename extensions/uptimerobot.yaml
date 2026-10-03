@@ -1,0 +1,64 @@
+# UptimeRobot, the hosted uptime monitor.
+# API: https://uptimerobot.com/api/  (v2, every call is a POST with the key in the form body)
+id: uptimerobot
+name: UptimeRobot
+version: 1.0.0
+description: Monitors at UptimeRobot, how many are up and which are down.
+author: nexdeck
+icon: uptimerobot
+category: monitoring
+docs_url: https://uptimerobot.com/api/
+url_placeholder: https://api.uptimerobot.com
+guide:
+  - "Set the URL to https://api.uptimerobot.com"
+  - "Make a Read-Only API key under Integrations & API > Main API key."
+
+fields:
+  - name: api_key
+    label: API key
+    type: password
+    required: true
+
+test:
+  path: /v2/getAccountDetails
+  method: POST
+  form: { api_key: "{{ api_key }}", format: json }
+  success: "UptimeRobot answers for {{ account.email }}."
+
+widgets:
+  - id: monitors
+    name: Monitors
+    description: Every monitor with its state.
+    renderer: list
+    path: /v2/getMonitors
+    method: POST
+    form: { api_key: "{{ api_key }}", format: json }
+    refresh: 120
+    items: monitors
+    title: "{{ friendly_name }}"
+    subtitle: "{{ url }}"
+    # UptimeRobot's states: 0 paused, 1 not checked yet, 2 up, 8 seems down, 9 down.
+    value: "{{ status | map(0=paused, 1=new, 2=up, 8=seems down, 9=down) }}"
+    status: "{{ status | map(2=ok, 8=warn, 9=bad, 0=warn, 1=warn) }}"
+    limit: 25
+    demo:
+      monitors:
+        - { friendly_name: Website, url: "https://example.com", status: 2 }
+        - { friendly_name: Mail, url: "mail.example.com", status: 2 }
+        - { friendly_name: Shop, url: "https://shop.example.com", status: 9 }
+
+  - id: summary
+    name: Up and down
+    description: How many monitors are up, down and paused.
+    renderer: stats
+    path: /v2/getMonitors
+    method: POST
+    form: { api_key: "{{ api_key }}", format: json }
+    refresh: 120
+    rows:
+      - { label: Up, value: "{{ monitors | where(status, 2) | count }}" }
+      - { label: Down, value: "{{ monitors | where(status, 9) | count }}" }
+      - { label: Paused, value: "{{ monitors | where(status, 0) | count }}" }
+      - { label: Monitors, value: "{{ monitors | count }}" }
+    demo:
+      monitors: [{ status: 2 }, { status: 2 }, { status: 2 }, { status: 9 }, { status: 0 }]

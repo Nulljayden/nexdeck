@@ -56,6 +56,7 @@ export function SettingsPage() {
             <Route path="tokens" element={<TokensSettings />} />
             {/* The three that moved to /system; old links and bookmarks keep working. */}
             <Route path="integrations" element={<Moved to="/system/integrations" />} />
+            <Route path="extensions" element={<Moved to="/system/extensions" />} />
             <Route path="users" element={<Moved to="/system/users" />} />
             <Route path="system" element={<Moved to="/system/about" />} />
             <Route path="*" element={<Navigate to="/settings" replace />} />

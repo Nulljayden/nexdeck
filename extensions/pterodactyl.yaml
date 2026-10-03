@@ -1,0 +1,95 @@
+# Pterodactyl (and Pelican) game server panel, through its client API.
+# API: https://dashflo.net/docs/api/pterodactyl/v1/
+id: pterodactyl
+name: Pterodactyl
+version: 1.0.0
+description: Game servers on a Pterodactyl panel, one server's load, and its power buttons.
+author: nexdeck
+icon: pterodactyl
+category: hosts
+docs_url: https://pterodactyl.io/
+url_placeholder: https://panel.example.com
+guide:
+  - "Make a client API key under Account > API Credentials."
+  - "For the server card, copy the short server ID from the address of the server's page (panel/server/<id>)."
+
+fields:
+  - name: api_key
+    label: Client API key
+    type: password
+    required: true
+    placeholder: ptlc_...
+  - name: server_id
+    label: Server ID
+    help: For the server card and its buttons. The eight characters in the address of the server's page.
+    placeholder: 1a2b3c4d
+
+auth:
+  bearer: "{{ api_key }}"
+  headers:
+    Accept: Application/vnd.pterodactyl.v1+json
+
+test:
+  path: /api/client/account
+  success: "Pterodactyl answers for {{ attributes.username }}."
+
+widgets:
+  - id: servers
+    name: Servers
+    description: Every server the key's account can see.
+    renderer: list
+    path: /api/client
+    refresh: 300
+    items: data
+    title: "{{ attributes.name }}"
+    subtitle: "{{ attributes.node }}"
+    value: "{{ attributes.limits.memory }} MB"
+    link: "{{ connection.url }}/server/{{ attributes.identifier }}"
+    limit: 25
+    demo:
+      data:
+        - attributes: { name: Minecraft, node: node-1, identifier: a1b2c3d4, limits: { memory: 4096 } }
+        - attributes: { name: Valheim, node: node-1, identifier: e5f6a7b8, limits: { memory: 8192 } }
+
+  - id: server
+    name: Server
+    description: State, processor, memory and disk of one server, with start, restart and stop.
+    renderer: stats
+    path: /api/client/servers/{{ server_id }}/resources
+    refresh: 15
+    link: "{{ connection.url }}/server/{{ connection.server_id }}"
+    rows:
+      - { label: State, value: "{{ attributes.current_state }}" }
+      - { label: CPU, value: "{{ attributes.resources.cpu_absolute | round(1) }}", unit: "%" }
+      - { label: Memory, value: "{{ attributes.resources.memory_bytes | bytes }}" }
+      - { label: Disk, value: "{{ attributes.resources.disk_bytes | bytes }}" }
+      - { label: Uptime, value: "{{ attributes.resources.uptime | divide(1000) | duration }}" }
+    actions:
+      - id: start
+        label: Start
+        icon: play
+        path: /api/client/servers/{{ server_id }}/power
+        method: POST
+        body: { signal: start }
+        message: Start sent.
+      - id: restart
+        label: Restart
+        icon: rotate-ccw
+        confirm: true
+        path: /api/client/servers/{{ server_id }}/power
+        method: POST
+        body: { signal: restart }
+        message: Restart sent.
+      - id: stop
+        label: Stop
+        icon: square
+        confirm: true
+        danger: true
+        path: /api/client/servers/{{ server_id }}/power
+        method: POST
+        body: { signal: stop }
+        message: Stop sent.
+    demo:
+      attributes:
+        current_state: running
+        resources: { cpu_absolute: 23.4, memory_bytes: 2147483648, disk_bytes: 5368709120, uptime: 93784000 }

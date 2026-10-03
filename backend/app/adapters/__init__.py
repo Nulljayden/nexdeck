@@ -59,17 +59,35 @@ def _name_the_connections_a_button_can_act_on() -> None:
     core.widgets = tuple(widgets)
 
 
+def _extensions() -> dict[str, Adapter]:
+    """The adapters made from extension files in the data folder.
+
+    Kept out of ``REGISTRY`` on purpose: that one is the built-in catalogue the
+    guards in the test suite walk, and an extension is the operator's own.
+    """
+    from ..services import extensions
+
+    return extensions.LOADED  # type: ignore[return-value]
+
+
 def all_adapters() -> list[Adapter]:
     _load()
-    return sorted(REGISTRY.values(), key=lambda a: (a.category, a.label))
+    return sorted([*REGISTRY.values(), *_extensions().values()], key=lambda a: (a.category, a.label))
 
 
 def get_adapter(kind: str) -> Adapter:
     _load()
-    try:
+    if kind in REGISTRY:
         return REGISTRY[kind]
-    except KeyError as error:
-        raise KeyError(f"Unknown adapter kind {kind!r}.") from error
+    from ..services import extensions
+
+    found = extensions.LOADED.get(kind)
+    if found is not None:
+        return found
+    if kind.startswith(extensions.PREFIX):
+        # A connection made with an extension that has since been removed.
+        return extensions.MissingExtension(kind)
+    raise KeyError(f"Unknown adapter kind {kind!r}.")
 
 
 def split_widget_kind(widget_kind: str) -> tuple[Adapter, str]:

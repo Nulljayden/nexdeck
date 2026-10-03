@@ -159,7 +159,8 @@
       "backups": "Backup",
       "media": "Media",
       "player": "Lettore musicale",
-      "homeNetwork": "Rete domestica"
+      "homeNetwork": "Rete domestica",
+      "extensions": "Estensioni"
     },
     "mail": {
       "title": "Server di posta",
@@ -532,6 +533,28 @@
         "factor_required": "In questa installazione ogni account deve avere un secondo fattore.",
         "home": "A casa."
       }
+    },
+    "extensions": {
+      "title": "Estensioni",
+      "help": "Integrazioni per altri servizi, ognuna un file YAML che descrive l'API del servizio. Un'estensione importata compare tra le Integrazioni come ogni altro servizio.",
+      "import": "Importa file",
+      "paste": "Incolla",
+      "importPasted": "Importa",
+      "reload": "Rileggi la cartella",
+      "reloaded": "La cartella delle estensioni è stata riletta.",
+      "imported": "{{name}} {{version}} importata.",
+      "none": "Nessuna estensione importata.",
+      "by": "di {{author}}",
+      "connections_one": "{{count}} connessione",
+      "connections_other": "{{count}} connessioni",
+      "connect": "Collegala",
+      "view": "Mostra il file",
+      "broken": "File che non è stato possibile leggere",
+      "folder": "I file si trovano in {{folder}}; un file copiato lì a mano compare dopo Rileggi la cartella.",
+      "remove": "Rimuovere {{name}}?",
+      "removeBody": "Il file viene eliminato. Importarlo di nuovo lo riporta.",
+      "removeInUse_one": "{{count}} connessione la usa. Resta, ma le sue schede mostrano un errore finché l'estensione non viene importata di nuovo.",
+      "removeInUse_other": "{{count}} connessioni la usano. Restano, ma le loro schede mostrano un errore finché l'estensione non viene importata di nuovo."
     }
   },
   "menu": {

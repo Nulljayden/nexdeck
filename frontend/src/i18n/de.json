@@ -159,7 +159,8 @@
       "backups": "Sicherungen",
       "media": "Medien",
       "player": "Musik-Player",
-      "homeNetwork": "Heimnetz"
+      "homeNetwork": "Heimnetz",
+      "extensions": "Erweiterungen"
     },
     "mail": {
       "title": "Mailserver",
@@ -532,6 +533,28 @@
         "factor_required": "Auf dieser Installation braucht jedes Konto einen zweiten Faktor.",
         "home": "Zu Hause."
       }
+    },
+    "extensions": {
+      "title": "Erweiterungen",
+      "help": "Integrationen für weitere Dienste, jede eine YAML-Datei, die die API des Dienstes beschreibt. Eine importierte Erweiterung steht unter Integrationen wie jeder andere Dienst bereit.",
+      "import": "Datei importieren",
+      "paste": "Einfügen",
+      "importPasted": "Importieren",
+      "reload": "Ordner neu lesen",
+      "reloaded": "Der Ordner der Erweiterungen wurde neu gelesen.",
+      "imported": "{{name}} {{version}} importiert.",
+      "none": "Noch keine Erweiterungen importiert.",
+      "by": "von {{author}}",
+      "connections_one": "{{count}} Verbindung",
+      "connections_other": "{{count}} Verbindungen",
+      "connect": "Verbinden",
+      "view": "Datei anzeigen",
+      "broken": "Dateien, die nicht gelesen werden konnten",
+      "folder": "Die Dateien liegen in {{folder}}; eine von Hand dorthin kopierte erscheint nach Ordner neu lesen.",
+      "remove": "{{name}} entfernen?",
+      "removeBody": "Die Datei wird gelöscht. Ein erneuter Import holt sie zurück.",
+      "removeInUse_one": "{{count}} Verbindung nutzt sie. Sie bleibt, aber ihre Karten zeigen einen Fehler, bis die Erweiterung wieder importiert ist.",
+      "removeInUse_other": "{{count}} Verbindungen nutzen sie. Sie bleiben, aber ihre Karten zeigen einen Fehler, bis die Erweiterung wieder importiert ist."
     }
   },
   "menu": {

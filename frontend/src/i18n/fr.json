@@ -159,7 +159,8 @@
       "backups": "Sauvegardes",
       "media": "Médias",
       "player": "Lecteur de musique",
-      "homeNetwork": "Réseau domestique"
+      "homeNetwork": "Réseau domestique",
+      "extensions": "Extensions"
     },
     "mail": {
       "title": "Serveur de messagerie",
@@ -532,6 +533,28 @@
         "factor_required": "Sur cette installation, chaque compte doit avoir un second facteur.",
         "home": "À la maison."
       }
+    },
+    "extensions": {
+      "title": "Extensions",
+      "help": "Des intégrations pour d'autres services, chacune un fichier YAML qui décrit l'API du service. Une extension importée est proposée sous Intégrations comme tout autre service.",
+      "import": "Importer un fichier",
+      "paste": "Coller",
+      "importPasted": "Importer",
+      "reload": "Relire le dossier",
+      "reloaded": "Le dossier des extensions a été relu.",
+      "imported": "{{name}} {{version}} importée.",
+      "none": "Aucune extension importée pour l'instant.",
+      "by": "par {{author}}",
+      "connections_one": "{{count}} connexion",
+      "connections_other": "{{count}} connexions",
+      "connect": "La connecter",
+      "view": "Afficher le fichier",
+      "broken": "Fichiers illisibles",
+      "folder": "Les fichiers se trouvent dans {{folder}} ; un fichier copié là à la main apparaît après Relire le dossier.",
+      "remove": "Retirer {{name}} ?",
+      "removeBody": "Le fichier est supprimé. L'importer à nouveau le ramène.",
+      "removeInUse_one": "{{count}} connexion l'utilise. Elle reste, mais ses cartes affichent une erreur jusqu'à ce que l'extension soit réimportée.",
+      "removeInUse_other": "{{count}} connexions l'utilisent. Elles restent, mais leurs cartes affichent une erreur jusqu'à ce que l'extension soit réimportée."
     }
   },
   "menu": {
