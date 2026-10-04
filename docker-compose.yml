@@ -18,19 +18,24 @@ services:
       - PGID=${PGID:-1000}
       # The Docker socket's group on the host, when detection fails:
       #   stat -c %g /var/run/docker.sock
-      - DOCKER_GID=${DOCKER_GID:-}
+      - DOCKER_GID
       # Set once and keep: it encrypts the stored API keys and signs sessions.
       # Leave empty to let nexdeck generate one into the data volume.
-      - NEXDECK_SECRET_KEY=${NEXDECK_SECRET_KEY:-}
+      - NEXDECK_SECRET_KEY
       # As browsers reach nexdeck, e.g. https://deck.example.com. Needed for
       # identity providers and Web Push.
-      - NEXDECK_PUBLIC_URL=${NEXDECK_PUBLIC_URL:-}
+      - NEXDECK_PUBLIC_URL
       # ⚠️ Only when it is set in .env. Setting it here unconditionally fixes
       # the level and puts the switch in the interface out of action: an
       # operator could pick "debug for an hour" and nothing would happen.
-      - NEXDECK_LOG_LEVEL=${NEXDECK_LOG_LEVEL:-}
+      #
+      # The variables below without "=" are handed over only when .env (or the
+      # shell) sets them; otherwise the container does not see them at all.
+      # "VAR=${VAR:-}" would hand over an empty string instead, and an empty
+      # NEXDECK_DEMO stopped the server at start: "" is not a yes or a no.
+      - NEXDECK_LOG_LEVEL
       # Start every card with invented data, for a look around.
-      - NEXDECK_DEMO=${NEXDECK_DEMO:-}
+      - NEXDECK_DEMO
     volumes:
       - ./data:/data
       # ⚠️ Optional, and worth a thought before you mount it. The Docker socket
