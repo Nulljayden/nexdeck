@@ -1,0 +1,44 @@
+# nexdeck as a TrueNAS SCALE custom app (24.10 Electric Eel and newer).
+#
+# Apps > Discover Apps > ⋮ (top right) > Install via YAML, name it "nexdeck",
+# paste this file, Save. Then open http://<truenas-ip>:5175 and make the
+# administrator on the first page.
+#
+# Before installing, change the two marked lines:
+#   1. image:  the image with the Extensions feature (see the notes in deploy/README.md).
+#   2. the dataset path under volumes: one of your pools.
+services:
+  nexdeck:
+    # ⚠️ 1. ghcr.io/derkezorm/nexdeck is the upstream image WITHOUT Extensions.
+    image: ghcr.io/nulljayden/nexdeck:latest
+    container_name: nexdeck
+    restart: unless-stopped
+    ports:
+      # TrueNAS's own web interface holds 80 and 443; 5175 is free by default.
+      - "5175:8000"
+    environment:
+      TZ: "America/New_York"
+      # 568 is TrueNAS's built-in "apps" user and group. The container fixes
+      # the ownership of /data to these by itself on every start.
+      PUID: "568"
+      PGID: "568"
+      # No NEXDECK_SECRET_KEY: nexdeck generates one into /data/secret.key and
+      # keeps it on the dataset. Back the dataset up; without that key the
+      # stored API keys cannot be read again.
+      #
+      # Add a variable only with a value. An empty one ("") stopped older
+      # images at start.
+      # NEXDECK_PUBLIC_URL: "https://deck.example.com"   # for OpenID Connect and Web Push
+    volumes:
+      # ⚠️ 2. A dataset of your own. Create it first under Datasets, preset "Apps".
+      # Extensions you import are kept here too, in /data/extensions.
+      - type: bind
+        source: /mnt/tank/apps/nexdeck
+        target: /data
+      # Optional: lets the Docker cards see and restart the containers of
+      # TrueNAS's other apps. This is root on the NAS in all but name; delete
+      # these three lines if you do not want that.
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+        read_only: true
